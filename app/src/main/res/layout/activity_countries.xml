@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:app="http://schemas.android.com/apk/res-auto" android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        tools:context=".CountriesActivity"
+        android:orientation="vertical"
+        android:background="@drawable/bg2">
+
+    <androidx.appcompat.widget.SearchView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/gradient_bg"
+            app:searchIcon="@android:drawable/ic_menu_search">
+    </androidx.appcompat.widget.SearchView>
+
+
+    <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="391dp"
+            android:id="@+id/recyclerView"
+            android:scrollbars="vertical"
+    />
+   <Button android:layout_width="140dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginLeft="130dp"
+            android:background="@drawable/btn_rounded"
+            android:text="APPLY"
+            android:textStyle="bold"
+            android:fontFamily="casual"
+            android:textSize="40px"
+            android:shadowColor="#01212E"
+            android:textColor="#E1E5D4"
+            android:id="@+id/btnClick"
+            android:visibility="visible"
+            android:onClick="selectClick"
+            android:clickable="true"/>
+</LinearLayout>

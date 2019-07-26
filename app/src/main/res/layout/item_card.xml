@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        android:id="@+id/row" xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="horizontal"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content">
+    <CheckBox
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textSize="50px"
+            android:textAllCaps="true"
+            android:id="@+id/cityName"
+            android:textColor="#E1E5D4"
+            android:textStyle="bold"
+            android:paddingBottom="30px"
+            android:lineHeight="5px"
+            android:fontFamily="casual"
+            android:paddingLeft="80px"
+            android:paddingTop="40px"
+            android:buttonTint="#E1E5D4"
+    />
+</LinearLayout>
