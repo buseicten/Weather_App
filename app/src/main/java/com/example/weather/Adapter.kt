@@ -1,12 +1,10 @@
 package com.example.weather
 
-import android.view.Display
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.LinearLayout
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
 class Adapter(val cityList: MutableList<Model>) : RecyclerView.Adapter<Adapter.ModelViewHolder>()

@@ -19,14 +19,17 @@ class MyPagerAdapter(fm: FragmentManager):FragmentPagerAdapter(fm) {
             else -> FirstFragment()
         }
     }
-
     override fun getCount(): Int {
         return myAdapter.getCheckList().size
     }
+
     override fun getPageTitle(position: Int): CharSequence? {
         return when (position){
-            0 -> myAdapter.getCheckList().toString()
-            else -> return "Third Tab"
+            0 ->
+            {
+                myAdapter.getCheckList()[position]
+            }
+            else -> myAdapter.getCheckList()[position]
         }
     }
 }

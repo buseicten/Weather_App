@@ -18,5 +18,6 @@
             android:paddingLeft="80px"
             android:paddingTop="40px"
             android:buttonTint="#E1E5D4"
+
     />
 </LinearLayout>
