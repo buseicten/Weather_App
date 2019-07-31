@@ -27,7 +27,7 @@ class MyPagerAdapter(fm: FragmentManager):FragmentPagerAdapter(fm) {
         return when (position){
             0 ->
             {
-                myAdapter.getCheckList()[position]
+               myAdapter.getCheckList()[position]
             }
             else -> myAdapter.getCheckList()[position]
         }

@@ -54,29 +54,12 @@
             android:layout_height="wrap_content"
             android:id="@+id/txt_city"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="226dp"
+            android:layout_marginBottom="180dp"
             android:layout_centerInParent="true"
             android:textColor="#E1E5D4"
             android:textStyle="bold"
             android:fontFamily="casual"
             android:textSize="40px"/>
-    <TextView
-            android:text=""
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/txt_sicaklik"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="176dp"
-            android:layout_marginLeft="85dp"/>
-    <TextView
-            android:text=""
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/txt_weather"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginBottom="176dp"
-            android:layout_marginRight="85dp"/>
     <com.google.android.material.tabs.TabLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -89,5 +72,51 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="80dp"
-            android:layout_marginBottom="200dp"/>
+            android:layout_marginBottom="200dp"
+            />
+    <ImageView
+            android:layout_width="400px"
+            android:layout_height="400px"
+            android:layout_alignTop="@+id/viewpager_main"
+            android:layout_centerInParent="true"
+            android:id="@+id/img"
+    />
+    <TextView
+            android:text=""
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/txt_temp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="300dp"
+            android:layout_centerInParent="true"
+            android:textColor="#E1E5D4"
+            android:textStyle="bold"
+            android:fontFamily="casual"
+            android:textSize="100px"/>
+    <TextView
+            android:text=""
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/txt_maxmin"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="250dp"
+            android:layout_centerInParent="true"
+            android:textColor="#E1E5D4"
+            android:textStyle="bold"
+            android:fontFamily="casual"
+            android:textSize="50px"
+            android:drawableLeft="@drawable/celsius"/>
+    <TextView
+            android:text="sdfsf"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/txt_sunrise"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="200dp"
+            android:layout_centerInParent="true"
+            android:textColor="#E1E5D4"
+            android:textStyle="bold"
+            android:fontFamily="casual"
+            android:textSize="50px"
+            android:drawableLeft="@drawable/dawn"/>
 </RelativeLayout>
