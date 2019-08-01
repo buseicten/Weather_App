@@ -1,11 +1,16 @@
-package com.example.weather
+package com.example.weather.Adapters
 
+import android.content.SharedPreferences
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.LinearLayout
+import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.weather.Activities.CountriesActivity
+import com.example.weather.Model.Model
+import com.example.weather.R
 
 class Adapter(val cityList: MutableList<Model>) : RecyclerView.Adapter<Adapter.ModelViewHolder>()
 {

@@ -1,10 +1,11 @@
-package com.example.weather
+package com.example.weather.Activities
 
 import android.content.pm.PackageManager
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.example.weather.R
 
 class SplashActivity : AppCompatActivity()
 {

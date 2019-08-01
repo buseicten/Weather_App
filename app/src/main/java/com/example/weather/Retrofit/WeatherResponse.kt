@@ -1,6 +1,9 @@
-package com.example.weather
+package com.example.weather.Retrofit
 
+import android.icu.text.TimeZoneFormat
 import com.google.gson.annotations.SerializedName
+import java.util.*
+import kotlin.collections.ArrayList
 
 class WeatherResponse
 {

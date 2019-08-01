@@ -4,7 +4,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".MainActivity" android:background="@drawable/bg2">
+        tools:context=".Activities.MainActivity" android:background="@drawable/bg2">
     <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -107,16 +107,34 @@
             android:textSize="50px"
             android:drawableLeft="@drawable/celsius"/>
     <TextView
-            android:text="sdfsf"
+            android:text=""
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/txt_sunrise"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="200dp"
+            android:layout_marginBottom="220dp"
             android:layout_centerInParent="true"
             android:textColor="#E1E5D4"
             android:textStyle="bold"
             android:fontFamily="casual"
             android:textSize="50px"
-            android:drawableLeft="@drawable/dawn"/>
+            android:drawableLeft="@drawable/dawn"
+            android:layout_alignLeft="@+id/txt_maxmin"
+            />
+    <TextView
+            android:text=""
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/txt_humidity"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="190dp"
+            android:layout_centerInParent="true"
+            android:textColor="#E1E5D4"
+            android:textStyle="bold"
+            android:fontFamily="casual"
+            android:textSize="50px"
+            android:drawableLeft="@drawable/humidity"
+            android:layout_alignLeft="@+id/txt_maxmin"/>
+
+
 </RelativeLayout>

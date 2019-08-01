@@ -1,27 +1,42 @@
-package com.example.weather
+package com.example.weather.Activities
 
+import android.content.Context
 import android.content.Intent
-import android.media.Image
+import android.content.pm.PackageManager
+import android.location.Location
+import android.net.wifi.p2p.WifiP2pManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
+import android.widget.ProgressBar
 import android.widget.TextView
+import com.example.weather.Adapters.MyPagerAdapter
+import com.example.weather.R
+import com.example.weather.Retrofit.Services
+import com.example.weather.Retrofit.WeatherResponse
 import com.google.android.material.tabs.TabLayout
 import kotlinx.android.synthetic.main.activity_main.*
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.text.SimpleDateFormat
+import java.util.*
+import android.location.LocationManager;
+import android.util.Log
+import androidx.annotation.NonNull
+import com.example.weather.Adapters.Adapter
 
 class MainActivity : AppCompatActivity() {
     var txt_city: TextView? = null
     var txt_temp: TextView? = null
     var txt_maxmin: TextView? = null
     var txt_sunrise: TextView? = null
+    var txt_humidity: TextView? = null
     val fragmentAdapter = MyPagerAdapter(supportFragmentManager)
-
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -30,11 +45,14 @@ class MainActivity : AppCompatActivity() {
         txt_temp = findViewById(R.id.txt_temp)
         txt_maxmin = findViewById(R.id.txt_maxmin)
         txt_sunrise = findViewById(R.id.txt_sunrise)
+        txt_humidity = findViewById(R.id.txt_humidity)
+        val myAdapter:Adapter = Adapter(CountriesActivity().getModels())
         val tabs:TabLayout = findViewById(R.id.tabs_main)
         val sehir = intent.getStringExtra("City") ?: ""
         val img:ImageView = findViewById(R.id.img)
         viewpager_main.adapter = fragmentAdapter
         tabs.setupWithViewPager(viewpager_main)
+
         for (item in sehir.split(",")) {
             if(item == "İzmir")
             {
@@ -76,24 +94,33 @@ class MainActivity : AppCompatActivity() {
             .build()
 
         val service = retrofit.create(Services::class.java)
-        val call = service.getCurrentWeatherData(name, AppId)
+        val call = service.getCurrentWeatherData(
+            name,
+            AppId
+        )
 
         call.enqueue(object: Callback<WeatherResponse>{
             override fun onResponse(call: Call<WeatherResponse>, response: Response<WeatherResponse>) {
                 if(response.code() == 200)
                 {
+                    response.body()?.let {
+
+                    } ?: run {
+
+                    }
                     val weatherResponse = response.body()!!
-                    /*val stringBuilder =
-                            "Temperature: " + (weatherResponse.main!!.temp - 273).toString().substring(0,3) + " ºC" + "\n" +
-                            "Temperature(min): " + (weatherResponse.main!!.temp_min - 273).toString().substring(0,3) + " ºC" + "\n" +
-                            "Temperature(max): " + (weatherResponse.main!!.temp_max - 273).toString().substring(0,3) + " ºC" + "\n" +
-                            "Humidity: " + weatherResponse.main!!.humidity + "\n" +
-                            "Pressure: " + weatherResponse.main!!.pressure
-                    txt_city!!.text = stringBuilder*/
+                    val sunrise = Date(weatherResponse.sys!!.sunrise)
+                    val format = SimpleDateFormat("HH:mm", Locale.US)
+                    val sunset = Date(weatherResponse.sys!!.sunset)
+
                     txt_temp!!.text = (weatherResponse.main!!.temp - 273).toString().substring(0,2) + " ºC"
                     txt_maxmin!!.text = " " + (weatherResponse.main!!.temp_min - 273).toString().substring(0,2) + " ºC" +  " / " + (weatherResponse.main!!.temp_max - 273).toString().substring(0,2) + " ºC"
-                    //txt_sunrise!!.text = weatherResponse.sys!!.sunrise.toString() + " / " + weatherResponse.sys!!.sunset.toString()
-
+                    txt_sunrise!!.text = format.format(sunrise) + " / " + format.format(sunset)
+                    txt_humidity!!.text = " % " + weatherResponse.main!!.humidity.toString().substring(0,2)
+                    if(weatherResponse.clouds!!.all > 50)
+                    {
+                        img.setBackgroundResource(R.drawable.clouds)
+                    }
                 }
             }
             override fun onFailure(call: Call<WeatherResponse>, t: Throwable) {
@@ -116,13 +143,13 @@ class MainActivity : AppCompatActivity() {
 
     fun clickSettings(view : View)
     {
-        val intent = Intent(this,SettingsActivity::class.java)
+        val intent = Intent(this, SettingsActivity::class.java)
         startActivity(intent)
     }
 
     fun addCity(view: View)
     {
-        val intent = Intent(this,CountriesActivity::class.java)
+        val intent = Intent(this, CountriesActivity::class.java)
         startActivity(intent)
     }
 }
