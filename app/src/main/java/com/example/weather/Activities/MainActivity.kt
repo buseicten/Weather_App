@@ -2,6 +2,7 @@ package com.example.weather.Activities
 
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.location.Location
 import android.net.wifi.p2p.WifiP2pManager
@@ -27,8 +28,12 @@ import java.text.SimpleDateFormat
 import java.util.*
 import android.location.LocationManager;
 import android.util.Log
+import android.widget.CheckBox
 import androidx.annotation.NonNull
+import androidx.appcompat.app.AlertDialog
 import com.example.weather.Adapters.Adapter
+import com.example.weather.Retrofit.Main
+import kotlinx.android.synthetic.main.item_card.*
 
 class MainActivity : AppCompatActivity() {
     var txt_city: TextView? = null
@@ -46,22 +51,26 @@ class MainActivity : AppCompatActivity() {
         txt_maxmin = findViewById(R.id.txt_maxmin)
         txt_sunrise = findViewById(R.id.txt_sunrise)
         txt_humidity = findViewById(R.id.txt_humidity)
-        val myAdapter:Adapter = Adapter(CountriesActivity().getModels())
+
         val tabs:TabLayout = findViewById(R.id.tabs_main)
-        val sehir = intent.getStringExtra("City") ?: ""
+        val sharedPreferences: SharedPreferences = this.getSharedPreferences("sharedPreferences",Context.MODE_PRIVATE)
+        val sehir = sharedPreferences.getString("City","") ?: ""
+        //val sehir = intent.getStringExtra("City") ?: ""
         val img:ImageView = findViewById(R.id.img)
+        //var savedCity:String?
         viewpager_main.adapter = fragmentAdapter
         tabs.setupWithViewPager(viewpager_main)
-
         for (item in sehir.split(",")) {
             if(item == "İzmir")
             {
 
             }
             else
+            {
+                //savedCity = sharedPreferences.getString("City",item)
                 tabs.addTab(tabs.newTab().setText(item))
+            }
         }
-
         img.setBackgroundResource(R.drawable.sun)
         name = "Izmir"
         getCurrentData()
