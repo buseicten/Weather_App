@@ -4,21 +4,24 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
-import android.location.Location
-import android.net.wifi.p2p.WifiP2pManager
+import android.location.*
+
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
-import android.widget.ProgressBar
+import android.widget.RelativeLayout
 import android.widget.TextView
+import android.widget.Toast
+import androidx.core.app.ActivityCompat
 import com.example.weather.Adapters.MyPagerAdapter
 import com.example.weather.R
 import com.example.weather.Retrofit.Services
 import com.example.weather.Retrofit.WeatherResponse
 import com.google.android.material.tabs.TabLayout
 import kotlinx.android.synthetic.main.activity_main.*
-import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -26,14 +29,8 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.text.SimpleDateFormat
 import java.util.*
-import android.location.LocationManager;
-import android.util.Log
-import android.widget.CheckBox
-import androidx.annotation.NonNull
-import androidx.appcompat.app.AlertDialog
-import com.example.weather.Adapters.Adapter
-import com.example.weather.Retrofit.Main
-import kotlinx.android.synthetic.main.item_card.*
+import androidx.core.content.ContextCompat
+import java.io.IOException
 
 class MainActivity : AppCompatActivity() {
     var txt_city: TextView? = null
@@ -41,6 +38,8 @@ class MainActivity : AppCompatActivity() {
     var txt_maxmin: TextView? = null
     var txt_sunrise: TextView? = null
     var txt_humidity: TextView? = null
+    var txtFindCity: TextView? = null
+    var findCity: String? = null
     val fragmentAdapter = MyPagerAdapter(supportFragmentManager)
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,30 +50,68 @@ class MainActivity : AppCompatActivity() {
         txt_maxmin = findViewById(R.id.txt_maxmin)
         txt_sunrise = findViewById(R.id.txt_sunrise)
         txt_humidity = findViewById(R.id.txt_humidity)
+        txtFindCity = findViewById(R.id.txtFindCity)
 
+        val rl:RelativeLayout = findViewById(R.id.rl)
         val tabs:TabLayout = findViewById(R.id.tabs_main)
         val sharedPreferences: SharedPreferences = this.getSharedPreferences("sharedPreferences",Context.MODE_PRIVATE)
         val sehir = sharedPreferences.getString("City","") ?: ""
-        //val sehir = intent.getStringExtra("City") ?: ""
         val img:ImageView = findViewById(R.id.img)
-        //var savedCity:String?
         viewpager_main.adapter = fragmentAdapter
         tabs.setupWithViewPager(viewpager_main)
-        for (item in sehir.split(",")) {
-            if(item == "İzmir")
-            {
 
-            }
-            else
-            {
-                //savedCity = sharedPreferences.getString("City",item)
-                tabs.addTab(tabs.newTab().setText(item))
-            }
+        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            sharedPreferences.edit().remove("sehir").apply()
+            rl.removeView(txt_temp)
+            rl.removeView(txt_humidity)
+            rl.removeView(txt_maxmin)
+            rl.removeView(txt_sunrise)
+            img.setBackgroundResource(R.drawable.close)
+            return
         }
-        img.setBackgroundResource(R.drawable.sun)
-        name = "Izmir"
-        getCurrentData()
+        else
+        {
+            val locationManager: LocationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
+            val criteria:Criteria = Criteria()
+            //locationManager.getBestProvider(criteria,true)
+            val provider:String? = locationManager.getBestProvider(criteria,true)
 
+            val gcd : Geocoder = Geocoder(baseContext, Locale.getDefault())
+            val address : List<Address>
+            provider?.let {
+                val location:Location? = locationManager.getLastKnownLocation(provider)
+                val locationListener: LocationListener = object : LocationListener {
+                    override fun onLocationChanged(location: Location) {
+                        location.latitude
+                        location.longitude
+                    }
+                    override fun onStatusChanged(provider: String, status: Int, extras: Bundle) {}
+                    override fun onProviderEnabled(provider: String) {}
+                    override fun onProviderDisabled(provider: String) {}
+                }
+                locationManager.requestLocationUpdates(provider, 1000, 1f, locationListener)
+                location?.let {
+                    address = gcd.getFromLocation(it.latitude, it.longitude, 1)
+                    if(address.size > 0)
+                    {
+                        findCity = address.get(0).locality.toString()
+                        name = findCity.toString()
+                        tabs.addTab(tabs.newTab().setText(name))
+
+                        txtFindCity!!.text = address.get(0).locality.toString()
+                        getCurrentData()
+                    }
+
+                } /*?: run{
+
+                   }*/
+            }
+
+        }
+        for (item in sehir.split(",")) {
+            //savedCity = sharedPreferences.getString("City",item)
+            tabs.addTab(tabs.newTab().setText(item))
+        }
         tabs.addOnTabSelectedListener(object: TabLayout.OnTabSelectedListener{
             override fun onTabSelected(p0: TabLayout.Tab?) {
                 viewpager_main!!.currentItem = tabs.selectedTabPosition
@@ -82,8 +119,14 @@ class MainActivity : AppCompatActivity() {
                 {
                     if(p0!!.text == item)
                     {
-                        img.setBackgroundResource(R.drawable.sun)
+                        txtFindCity!!.text = item
                         name = item
+                        getCurrentData()
+                    }
+                    if(p0!!.text == findCity)
+                    {
+                        txtFindCity!!.text = findCity
+                        name = findCity.toString()
                         getCurrentData()
                     }
                 }
@@ -129,6 +172,10 @@ class MainActivity : AppCompatActivity() {
                     if(weatherResponse.clouds!!.all > 50)
                     {
                         img.setBackgroundResource(R.drawable.clouds)
+                    }
+                    else
+                    {
+                        img.setBackgroundResource(R.drawable.sun)
                     }
                 }
             }

@@ -22,6 +22,8 @@ class CountriesActivity : AppCompatActivity() {
         setContentView(R.layout.activity_countries)
         recyclerView.adapter = myAdapter
         recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        val sharedPreferences:SharedPreferences = this.getSharedPreferences("sharedPreferences", Context.MODE_PRIVATE)
+        val sehir = sharedPreferences.getString("City","") ?: ""
         myAdapter.onCityClicked = {cityName ->
             myAdapter.getCheckList()
             intent.putExtra("City",cityName)
@@ -68,7 +70,7 @@ class CountriesActivity : AppCompatActivity() {
     fun getModels(): MutableList<Model>
     {
         val models = mutableListOf(
-            Model("İzmir", true),
+            Model("İzmir", false),
             Model("İstanbul", false),
             Model("Ankara", false),
             Model("Manisa", false),
