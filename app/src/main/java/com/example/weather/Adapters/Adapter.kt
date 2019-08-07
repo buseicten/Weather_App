@@ -27,6 +27,7 @@ class Adapter(val cityList: MutableList<Model>) : RecyclerView.Adapter<Adapter.M
             if(item.check) {
                 cityName.isChecked = true
             }
+
             row.setOnClickListener { onCityClicked(cityName.text.toString()) }
             cityName.setText(item.cityName)
             cityName.setOnCheckedChangeListener { compoundButton, check ->

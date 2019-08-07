@@ -6,49 +6,33 @@
         android:layout_height="match_parent"
         android:id="@+id/rl"
         tools:context=".Activities.MainActivity" android:background="@drawable/bg2">
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:clickable="true"
             android:id="@+id/btnEkle"
             android:layout_alignBottom="@id/btnSettings"
-            android:layout_marginBottom="104dp"
+            android:layout_marginBottom="64dp"
             android:layout_alignParentRight="true"
             android:layout_marginRight="90px"
             app:srcCompat="@drawable/icon3"
             android:onClick="addCity"
             app:fabSize="auto" app:backgroundTint="#090919"/>
-    <Button
-            android:text="HOME"
-            android:textStyle="bold"
-            android:fontFamily="casual"
-            android:textSize="40px"
-            android:layout_width="140dp"
-            android:layout_height="60dp"
-            android:id="@+id/btnHome"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="37dp"
-            android:layout_marginLeft="90px"
-            android:onClick="clickHome"
-            android:shadowColor="#01212E"
-            android:background="@drawable/btn_rounded"
-            android:textColor="#E1E5D4"/>
-    <Button
-            android:text="SETTINGS"
-            android:textStyle="bold"
-            android:fontFamily="casual"
-            android:textSize="40px"
-            android:layout_width="140dp"
-            android:layout_height="60dp"
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
             android:id="@+id/btnSettings"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="34dp"
+            android:layout_marginBottom="94dp"
             android:layout_alignParentRight="true"
             android:layout_marginRight="90px"
+            app:srcCompat="@drawable/settings"
             android:onClick="clickSettings"
-            android:shadowColor="#01212E"
-            android:textColor="#E1E5D4"
-            android:background="@drawable/btn_rounded"/>
+            app:fabSize="auto" app:backgroundTint="#090919"/>
+
     <TextView
             android:text=""
             android:layout_width="wrap_content"

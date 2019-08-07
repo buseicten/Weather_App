@@ -5,6 +5,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_countries.*
@@ -17,6 +18,7 @@ import kotlinx.android.synthetic.main.item_card.*
 class CountriesActivity : AppCompatActivity() {
 
     var myAdapter: Adapter = Adapter(getModels())
+    var k:Int = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_countries)
@@ -24,33 +26,27 @@ class CountriesActivity : AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         val sharedPreferences:SharedPreferences = this.getSharedPreferences("sharedPreferences", Context.MODE_PRIVATE)
         val sehir = sharedPreferences.getString("City","") ?: ""
-        myAdapter.onCityClicked = {cityName ->
-            myAdapter.getCheckList()
-            intent.putExtra("City",cityName)
-            check()
-            selectClick()
-       }
-    }
-    var k:Int = 0
-    fun check()
-    {
-        val sharedPreferences:SharedPreferences = this.getSharedPreferences("sharedPreferences", Context.MODE_PRIVATE)
-        val sehir = sharedPreferences.getString("City","") ?: ""
-        for (item in sehir.split(","))
+        val sehirList :List<String> = sehir.split(",")
+        for (item in sehirList)
         {
-            while(k<myAdapter.getCheckList().size)
+            while(k<getModels().size)
             {
-               // if(myAdapter.getCheckList()[k] == item)
-                //{
-                    if(getModels()[k].cityName == item)
-                    {
-                        getModels()[k].check = true
-                    }
-                //}
+                if(getModels()[k].cityName.equals(item.trim(),false))
+                {
+                    myAdapter.cityList.add(getModels()[k])
+                    myAdapter.cityList[k].check = true
+                    myAdapter.getCheckList()
+                    break
+                }
                 k++
             }
 
         }
+        myAdapter.onCityClicked = {cityName ->
+            myAdapter.getCheckList()
+            intent.putExtra("City",cityName)
+            selectClick()
+       }
     }
 
     fun selectClick()

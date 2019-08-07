@@ -56,24 +56,33 @@ class MainActivity : AppCompatActivity() {
         val tabs:TabLayout = findViewById(R.id.tabs_main)
         val sharedPreferences: SharedPreferences = this.getSharedPreferences("sharedPreferences",Context.MODE_PRIVATE)
         val sehir = sharedPreferences.getString("City","") ?: ""
+        val state = intent.getBooleanExtra("State", true)
         val img:ImageView = findViewById(R.id.img)
         viewpager_main.adapter = fragmentAdapter
         tabs.setupWithViewPager(viewpager_main)
 
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            /*sharedPreferences.edit().remove("sehir").apply()
+            rl.removeView(txt_temp)
+            rl.removeView(txt_humidity)
+            rl.removeView(txt_maxmin)
+            rl.removeView(txt_sunrise)
+            img.setBackgroundResource(R.drawable.close)*/
+            return
+        }
+        if(!state)
+        {
             sharedPreferences.edit().remove("sehir").apply()
             rl.removeView(txt_temp)
             rl.removeView(txt_humidity)
             rl.removeView(txt_maxmin)
             rl.removeView(txt_sunrise)
             img.setBackgroundResource(R.drawable.close)
-            return
         }
-        else
+        if(state)
         {
             val locationManager: LocationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
             val criteria:Criteria = Criteria()
-            //locationManager.getBestProvider(criteria,true)
             val provider:String? = locationManager.getBestProvider(criteria,true)
 
             val gcd : Geocoder = Geocoder(baseContext, Locale.getDefault())
@@ -189,12 +198,6 @@ class MainActivity : AppCompatActivity() {
         var BaseUrl = "http://api.openweathermap.org/"
         var AppId = "d076fb6784b67eeccba7145d460125ad"
         var name = ""
-    }
-
-    fun clickHome(view: View)
-    {
-        val intent = Intent(this, MainActivity::class.java)
-        startActivity(intent)
     }
 
     fun clickSettings(view : View)
