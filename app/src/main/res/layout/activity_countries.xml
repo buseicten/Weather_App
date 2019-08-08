@@ -35,6 +35,6 @@
             android:textColor="#E1E5D4"
             android:id="@+id/btnClick"
             android:visibility="visible"
-            android:onClick="selectClick"
+
             android:clickable="true"/>
 </LinearLayout>

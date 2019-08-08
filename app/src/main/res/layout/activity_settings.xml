@@ -23,16 +23,21 @@
 
     />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+    <Button
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:clickable="true"
             android:id="@+id/btnBack"
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="94dp"
             android:layout_alignParentLeft="true"
             android:layout_marginLeft="90px"
-            app:srcCompat="@drawable/back"
-            android:onClick="clickBack"
-            app:fabSize="auto" app:backgroundTint="#090919"/>
+
+            app:backgroundTint="#090919"
+            android:text="BACK"
+            android:textColor="#E1E5D4"
+            android:textStyle="bold"
+            android:fontFamily="casual"
+            android:textSize="15sp"
+            android:background="@drawable/back_rounded"/>
 </RelativeLayout>

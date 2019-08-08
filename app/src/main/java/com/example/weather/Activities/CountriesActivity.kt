@@ -6,7 +6,9 @@ import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
 import android.widget.Button
+import android.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_countries.*
 import com.example.weather.Adapters.Adapter
@@ -33,9 +35,8 @@ class CountriesActivity : AppCompatActivity() {
             {
                 if(getModels()[k].cityName.equals(item.trim(),false))
                 {
-                    myAdapter.cityList.add(getModels()[k])
+                    myAdapter.getCheckList().add(getModels()[k].cityName)
                     myAdapter.cityList[k].check = true
-                    myAdapter.getCheckList()
                     break
                 }
                 k++
@@ -75,5 +76,4 @@ class CountriesActivity : AppCompatActivity() {
         )
         return models
     }
-
 }
